@@ -188,7 +188,7 @@ public class GCSBatchSink extends AbstractFileSink<GCSBatchSink.GCSBatchSinkConf
     }
 
     try {
-      StorageClient storageClient = StorageClient.create(config.connection);
+      StorageClient storageClient = StorageClient.create(config.connection, null);
       storageClient.mapMetaDataForAllBlobs(getPrefixPath(), new MetricsEmitter(context.getMetrics())::emitMetrics);
     } catch (Exception e) {
       LOG.warn("Metrics for the number of affected rows in GCS Sink maybe incorrect.", e);
