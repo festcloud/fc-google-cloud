@@ -71,7 +71,7 @@
         },
         {
           "name": "readTimeout",
-          "widget-type": "textbox",
+          "widget-type": "hidden",
           "label" : "Read Timeout"
         }
       ]

@@ -79,8 +79,7 @@ public class SourceDestConfig extends GCPConfig {
   @Macro
   @Nullable
   @Description("Timeout in seconds to read data from an established HTTP connection. " +
-    "For performing copy/move operation on large files in GCS buckets, set a higher value between 20 and 600 seconds." +
-    " The default value is 20 seconds.")
+    "For performing copy/move operation on large files in GCS buckets, set a value between 30 and 600 seconds.")
   protected String readTimeout;
 
   public SourceDestConfig(@Nullable String project, @Nullable String serviceAccountType,
@@ -154,8 +153,8 @@ public class SourceDestConfig extends GCPConfig {
     } catch (NumberFormatException e) {
       collector.addFailure(e.getMessage(), null).withConfigProperty(READ_TIMEOUT);
     }
-    if (readTimeoutInt < 20 || readTimeoutInt > 600) {
-      collector.addFailure("The allowed timeout value is between 20 and 600. Please enter a value in this range"
+    if (readTimeoutInt < 30 || readTimeoutInt > 600) {
+      collector.addFailure("The allowed timeout value is between 30 and 600. Please enter a value in this range"
         , null).withConfigProperty(READ_TIMEOUT);
     }
   }

@@ -330,6 +330,9 @@ public class StorageClient {
     if (readTimeout != null) {
       int seconds = Integer.parseInt(readTimeout);
       builder.setTransportOptions(HttpTransportOptions.newBuilder().setReadTimeout(seconds * 1000).build());
+    } else {
+      // Set 30 seconds as default as this is required for plugin's use case
+      builder.setTransportOptions(HttpTransportOptions.newBuilder().setReadTimeout(30 * 1000).build());
     }
     Storage storage = builder.build().getService();
     return new StorageClient(storage);
