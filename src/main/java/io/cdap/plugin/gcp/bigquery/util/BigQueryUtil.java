@@ -532,11 +532,6 @@ public final class BigQueryUtil {
     Schema nonNullableSchema = getNonNullableSchema(arraySchema);
     Schema componentSchema = nonNullableSchema.getComponentSchema();
 
-    if (componentSchema.isNullable()) {
-      return collector.addFailure(String.format("Field '%s' contains null values in its array.", name),
-                                  "Change the array component type to be non-nullable.");
-    }
-
     if (UNSUPPORTED_ARRAY_TYPES.contains(componentSchema.getType())) {
       return collector.addFailure(String.format("Field '%s' is an array of unsupported type '%s'.",
                                                 name, componentSchema.getDisplayName()),
