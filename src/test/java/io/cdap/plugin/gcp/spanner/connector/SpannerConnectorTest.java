@@ -47,6 +47,7 @@ import io.cdap.plugin.gcp.spanner.source.SpannerSource;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -65,6 +66,7 @@ import java.util.concurrent.TimeUnit;
  *
  * The service account used to run this test needs Spanner admin permissions in the project.
  */
+@Ignore("Currently we support unit test only and ignore 'integration' since it is tested by CDAP already.")
 public class SpannerConnectorTest {
   private static String project;
   private static String instance;

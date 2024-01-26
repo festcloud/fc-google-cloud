@@ -50,6 +50,7 @@ import io.cdap.plugin.gcp.common.TestEnvironment;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -68,6 +69,7 @@ import java.util.stream.Collectors;
  *
  * The service account used to run this test needs BigQuery admin permissions in the project.
  */
+@Ignore("Currently we support unit test only and ignore 'integration' since it is tested by CDAP already.")
 public class BigQueryConnectorTest {
   private static final Set<String> SUPPORTED_TYPES = new HashSet<>(Arrays.asList("table", "view"));
   private static TestEnvironment testEnvironment;
