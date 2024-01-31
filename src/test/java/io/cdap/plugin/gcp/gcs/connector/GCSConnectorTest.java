@@ -38,6 +38,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -59,6 +60,7 @@ import java.util.concurrent.TimeUnit;
  *
  * In order to run this test, the service account must have permission to create buckets and objects.
  */
+@Ignore("Currently we support unit test only and ignore 'integration' since it is tested by CDAP already.")
 public class GCSConnectorTest {
   private static TestEnvironment testEnvironment;
   private static String bucket;
@@ -76,7 +78,8 @@ public class GCSConnectorTest {
 
   @Before
   public void setUp() {
-    storage.create(BucketInfo.newBuilder(bucket).build());
+    storage.create(BucketInfo.newBuilder(bucket)
+            .setLocation("eu").build());
   }
 
   @After
