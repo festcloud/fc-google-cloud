@@ -36,6 +36,7 @@ import org.apache.avro.generic.GenericDatumWriter;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.io.BinaryEncoder;
 import org.apache.avro.io.DatumWriter;
+import org.apache.avro.io.Encoder;
 import org.apache.avro.io.EncoderFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.NullWritable;
@@ -209,7 +210,7 @@ public class PubSubOutputFormat extends OutputFormat<NullWritable, StructuredRec
           final byte[] serializedBytes;
           DatumWriter<GenericRecord> datumWriter = new GenericDatumWriter<>(avroSchema);
           ByteArrayOutputStream out = new ByteArrayOutputStream();
-          BinaryEncoder encoder = EncoderFactory.get().binaryEncoder(out, null);
+          Encoder encoder = EncoderFactory.get().jsonEncoder(avroSchema, out);
           datumWriter.write(transform, encoder);
           encoder.flush();
           out.close();
