@@ -168,17 +168,21 @@ public class PubSubOutputFormat extends OutputFormat<NullWritable, StructuredRec
       this.futures = ConcurrentHashMap.newKeySet();
       this.format = format;
       this.delimiter = delimiter;
+      LOG.info("PubSubRecordWriter initialized");
     }
 
     @Override
     public void write(NullWritable key, StructuredRecord value) throws IOException {
+      LOG.info("write() method called");
       handleErrorIfAny();
       PubsubMessage message = getPubSubMessage(value);
+      LOG.info("PubsubMessage: " + message.toString());
       ApiFuture future = publisher.publish(message);
       futures.add(future);
       ApiFutures.addCallback(future, new ApiFutureCallback<String>() {
         @Override
         public void onFailure(Throwable throwable) {
+          LOG.error(throwable.getMessage() + ". Caused record: " + value.getSchema().toString());
           error.set(throwable);
           failures.incrementAndGet();
           futures.remove(future);
@@ -192,6 +196,7 @@ public class PubSubOutputFormat extends OutputFormat<NullWritable, StructuredRec
     }
 
     private PubsubMessage getPubSubMessage(StructuredRecord value) throws IOException {
+      LOG.info("Creating pubsub message for " + value.getSchema().toString());
       String payload;
       ByteString data;
       PubsubMessage message = null;
@@ -222,6 +227,7 @@ public class PubSubOutputFormat extends OutputFormat<NullWritable, StructuredRec
         case PubSubConstants.TEXT:
         case PubSubConstants.BLOB:
         case PubSubConstants.JSON: {
+          LOG.info("For JSON called getMessage");
           payload = StructuredRecordStringConverter.toJsonString(value);
           data = ByteString.copyFromUtf8(payload);
           message = PubsubMessage.newBuilder().setData(data).build();
@@ -245,6 +251,9 @@ public class PubSubOutputFormat extends OutputFormat<NullWritable, StructuredRec
           message = PubsubMessage.newBuilder().setData(data).build();
           break;
         }
+      }
+      if (message != null) {
+        LOG.info("PubSub message is: " + message);
       }
       return message;
     }
