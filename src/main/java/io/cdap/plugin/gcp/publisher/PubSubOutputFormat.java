@@ -179,6 +179,7 @@ public class PubSubOutputFormat extends OutputFormat<NullWritable, StructuredRec
       ApiFutures.addCallback(future, new ApiFutureCallback<String>() {
         @Override
         public void onFailure(Throwable throwable) {
+          LOG.error(throwable.getMessage() + ". Caused record: " + value.getSchema().toString());
           error.set(throwable);
           failures.incrementAndGet();
           futures.remove(future);
@@ -245,6 +246,9 @@ public class PubSubOutputFormat extends OutputFormat<NullWritable, StructuredRec
           message = PubsubMessage.newBuilder().setData(data).build();
           break;
         }
+      }
+      if (message != null) {
+        LOG.info("PubSub message is: " + message);
       }
       return message;
     }
