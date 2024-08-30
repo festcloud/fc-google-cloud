@@ -36,6 +36,7 @@ import org.apache.avro.generic.GenericDatumWriter;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.io.BinaryEncoder;
 import org.apache.avro.io.DatumWriter;
+import org.apache.avro.io.Encoder;
 import org.apache.avro.io.EncoderFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.NullWritable;
@@ -167,17 +168,21 @@ public class PubSubOutputFormat extends OutputFormat<NullWritable, StructuredRec
       this.futures = ConcurrentHashMap.newKeySet();
       this.format = format;
       this.delimiter = delimiter;
+      LOG.info("PubSubRecordWriter initialized");
     }
 
     @Override
     public void write(NullWritable key, StructuredRecord value) throws IOException {
+      LOG.info("write() method called");
       handleErrorIfAny();
       PubsubMessage message = getPubSubMessage(value);
+      LOG.info("PubsubMessage: " + message.toString());
       ApiFuture future = publisher.publish(message);
       futures.add(future);
       ApiFutures.addCallback(future, new ApiFutureCallback<String>() {
         @Override
         public void onFailure(Throwable throwable) {
+          LOG.error(throwable.getMessage() + ". Caused record: " + value.getSchema().toString());
           error.set(throwable);
           failures.incrementAndGet();
           futures.remove(future);
@@ -191,6 +196,7 @@ public class PubSubOutputFormat extends OutputFormat<NullWritable, StructuredRec
     }
 
     private PubsubMessage getPubSubMessage(StructuredRecord value) throws IOException {
+      LOG.info("Creating pubsub message for " + value.getSchema().toString());
       String payload;
       ByteString data;
       PubsubMessage message = null;
@@ -209,7 +215,7 @@ public class PubSubOutputFormat extends OutputFormat<NullWritable, StructuredRec
           final byte[] serializedBytes;
           DatumWriter<GenericRecord> datumWriter = new GenericDatumWriter<>(avroSchema);
           ByteArrayOutputStream out = new ByteArrayOutputStream();
-          BinaryEncoder encoder = EncoderFactory.get().binaryEncoder(out, null);
+          Encoder encoder = EncoderFactory.get().jsonEncoder(avroSchema, out);
           datumWriter.write(transform, encoder);
           encoder.flush();
           out.close();

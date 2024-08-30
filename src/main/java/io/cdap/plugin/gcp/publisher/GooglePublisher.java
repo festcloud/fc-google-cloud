@@ -47,6 +47,8 @@ import io.cdap.plugin.gcp.common.GCPUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Map;
@@ -63,6 +65,8 @@ import javax.annotation.Nullable;
   "asynchronous messaging that decouples senders and receivers, it allows for secure and highly available " +
   "communication between independently written applications")
 public class GooglePublisher extends BatchSink<StructuredRecord, NullWritable, StructuredRecord> {
+  private static final Logger LOG = LoggerFactory.getLogger(GooglePublisher.class);
+
   private final Config config;
 
   @SuppressWarnings("unused")
@@ -79,6 +83,7 @@ public class GooglePublisher extends BatchSink<StructuredRecord, NullWritable, S
 
   @Override
   public void prepareRun(BatchSinkContext context) throws IOException {
+    LOG.info("GooglePublisher.prepareRun() method called");
     FailureCollector collector = context.getFailureCollector();
     config.validate(collector);
 
