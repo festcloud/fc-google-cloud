@@ -173,7 +173,7 @@ public class PubSubOutputFormat extends OutputFormat<NullWritable, StructuredRec
 
     @Override
     public void write(NullWritable key, StructuredRecord value) throws IOException {
-      LOG.debug("write() method called");
+      LOG.info("write() method called");
       handleErrorIfAny();
       PubsubMessage message = getPubSubMessage(value);
       ApiFuture future = publisher.publish(message);
