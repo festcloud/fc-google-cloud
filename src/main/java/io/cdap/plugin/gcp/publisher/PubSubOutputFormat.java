@@ -227,7 +227,6 @@ public class PubSubOutputFormat extends OutputFormat<NullWritable, StructuredRec
         case PubSubConstants.TEXT:
         case PubSubConstants.BLOB:
         case PubSubConstants.JSON: {
-          LOG.info("For JSON called getMessage");
           payload = StructuredRecordStringConverter.toJsonString(value);
           data = ByteString.copyFromUtf8(payload);
           message = PubsubMessage.newBuilder().setData(data).build();
@@ -251,9 +250,6 @@ public class PubSubOutputFormat extends OutputFormat<NullWritable, StructuredRec
           message = PubsubMessage.newBuilder().setData(data).build();
           break;
         }
-      }
-      if (message != null) {
-        LOG.info("PubSub message is: " + message);
       }
       return message;
     }
