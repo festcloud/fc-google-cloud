@@ -55,7 +55,6 @@
     <url>https://issues.cask.co/browse/CDAP</url>
   </issueManagement>
 
-<!--
   <distributionManagement>
     <repository>
       <id>sonatype.release</id>
@@ -66,7 +65,6 @@
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
   </distributionManagement>
--->
 
   <properties>
     <jee.version>7</jee.version>
