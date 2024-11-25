@@ -55,6 +55,7 @@
     <url>https://issues.cask.co/browse/CDAP</url>
   </issueManagement>
 
+<!--
   <distributionManagement>
     <repository>
       <id>sonatype.release</id>
@@ -65,6 +66,7 @@
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
   </distributionManagement>
+-->
 
   <properties>
     <jee.version>7</jee.version>
@@ -99,6 +101,12 @@
     <spark3.version>3.1.1</spark3.version>
     <spark-bq-connector.version>0.23.1</spark-bq-connector.version>
     <testSourceLocation>${project.basedir}/src/test/java/</testSourceLocation>
+
+    <!--FC related properties-->
+    <version.cloud-metadata-provider>0.0.2-SNAPSHOT</version.cloud-metadata-provider>
+    <version.cloud-metadata-common>0.0.2-SNAPSHOT</version.cloud-metadata-common>
+    <apache.avro.version>1.11.3</apache.avro.version>
+    <version.commons-lang3>3.17.0</version.commons-lang3>
   </properties>
 
   <dependencyManagement>
@@ -782,6 +790,39 @@
       <version>0.2.0</version>
     </dependency>
     <!-- End: dependency used by the Dataplex connector -->
+    <!-- Start: FC related dependencies -->
+    <dependency>
+      <groupId>ai.festcloud</groupId>
+      <artifactId>cloud-metadata-provider</artifactId>
+      <version>${version.cloud-metadata-provider}</version>
+    </dependency>
+    <dependency>
+      <groupId>ai.festcloud</groupId>
+      <artifactId>cloud-metadata-model</artifactId>
+      <version>${version.cloud-metadata-common}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.avro</groupId>
+      <artifactId>avro</artifactId>
+      <version>${apache.avro.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${version.commons-lang3}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>2.2.224</version>
+    </dependency>
+    <dependency>
+      <groupId>ai.festcloud</groupId>
+      <artifactId>cloud-data-plugins-common</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+
+    <!-- End: FC related dependencies -->
   </dependencies>
 
   <build>
@@ -867,6 +908,11 @@
               org.apache.hadoop.hbase.mapreduce.*;
               org.apache.hadoop.hbase.security.token.*;
               com.google.cloud.spark.bigquery.*;
+              org.apache.commons.collections4.*;
+              ai.festcloud.model.*;
+              ai.festcloud.datafabric.plugins.common.integrity.*;
+              org.apache.avro.*;
+              org.h2.*;
             </_exportcontents>
           </instructions>
         </configuration>
