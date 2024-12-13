@@ -818,7 +818,7 @@
     <dependency>
       <groupId>ai.festcloud</groupId>
       <artifactId>cloud-data-plugins-common</artifactId>
-      <version>${cloud-data-plugins-common}</version>
+      <version>${version.cloud-data-plugins-common}</version>
     </dependency>
 
     <!-- End: FC related dependencies -->
