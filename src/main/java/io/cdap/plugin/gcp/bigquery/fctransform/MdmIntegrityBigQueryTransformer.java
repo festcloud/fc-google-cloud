@@ -151,13 +151,6 @@ public class MdmIntegrityBigQueryTransformer extends Transform<StructuredRecord,
       throw new RuntimeException("ID is required but not provided.");
     }
 
-    if (containsOperationField) {
-      String operationType = result.get(MetadataUtils.DEFAULT_TARGET_FIELD) == null
-              ? OPERATION_CREATE
-              : OPERATION_UPDATE;
-      result.put(OPERATION, operationType);
-    }
-
     return setValuesToTargetFields(input, result);
   }
 
