@@ -168,15 +168,12 @@ public class PubSubOutputFormat extends OutputFormat<NullWritable, StructuredRec
       this.futures = ConcurrentHashMap.newKeySet();
       this.format = format;
       this.delimiter = delimiter;
-      LOG.info("PubSubRecordWriter initialized");
     }
 
     @Override
     public void write(NullWritable key, StructuredRecord value) throws IOException {
-      LOG.info("write() method called");
       handleErrorIfAny();
       PubsubMessage message = getPubSubMessage(value);
-      LOG.info("PubsubMessage: " + message.toString());
       ApiFuture future = publisher.publish(message);
       futures.add(future);
       ApiFutures.addCallback(future, new ApiFutureCallback<String>() {
@@ -196,7 +193,6 @@ public class PubSubOutputFormat extends OutputFormat<NullWritable, StructuredRec
     }
 
     private PubsubMessage getPubSubMessage(StructuredRecord value) throws IOException {
-      LOG.info("Creating pubsub message for " + value.getSchema().toString());
       String payload;
       ByteString data;
       PubsubMessage message = null;
