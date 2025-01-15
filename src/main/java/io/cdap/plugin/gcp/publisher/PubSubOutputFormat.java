@@ -196,7 +196,6 @@ public class PubSubOutputFormat extends OutputFormat<NullWritable, StructuredRec
     }
 
     private PubsubMessage getPubSubMessage(StructuredRecord value) throws IOException {
-      LOG.info("Creating pubsub message for " + value.getSchema().toString());
       String payload;
       ByteString data;
       PubsubMessage message = null;
