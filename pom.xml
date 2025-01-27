@@ -47,7 +47,7 @@
   <scm>
     <connection>scm:git:https://github.com/festcloud/fc-google-cloud.git</connection>
     <developerConnection>scm:git:git@github.com:festcloud/fc-google-cloud.git</developerConnection>
-    <url>https://github.com/festcloud/fc-google-cloud.git.git</url>
+    <url>https://github.com/festcloud/fc-google-cloud.git</url>
     <tag>HEAD</tag>
   </scm>
 
