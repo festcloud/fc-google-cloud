@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
 
+/**
+ * BigQuery Mdm Integrity Validation config
+ */
 public class MdmIntegrityBigQueryTransformerConfig extends PluginConfig {
 
   public static final String MAPPING = "mapping";
