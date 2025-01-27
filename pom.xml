@@ -45,9 +45,9 @@
   </developers>
 
   <scm>
-    <connection>scm:git:https://github.com/data-integrations/google-cloud.git</connection>
-    <developerConnection>scm:git:git@github.com:data-integrations/google-cloud.git</developerConnection>
-    <url>https://github.com/data-integrations/google-cloud.git</url>
+    <connection>scm:git:https://github.com/festcloud/fc-google-cloud.git</connection>
+    <developerConnection>scm:git:git@github.com:festcloud/fc-google-cloud.git</developerConnection>
+    <url>https://github.com/festcloud/fc-google-cloud.git</url>
     <tag>HEAD</tag>
   </scm>
 
@@ -56,14 +56,14 @@
   </issueManagement>
 
   <distributionManagement>
-    <repository>
-      <id>sonatype.release</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-    </repository>
     <snapshotRepository>
-      <id>sonatype.snapshots</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <id>artifact-registry</id>
+      <url>artifactregistry://europe-west4-maven.pkg.dev/gcp-srv-nprd/gcp-srv-nprd-arm-shared</url>
     </snapshotRepository>
+    <repository>
+      <id>artifact-registry</id>
+      <url>artifactregistry://europe-west4-maven.pkg.dev/gcp-srv-nprd/gcp-srv-nprd-arm-shared</url>
+    </repository>
   </distributionManagement>
 
   <properties>
@@ -101,8 +101,9 @@
     <testSourceLocation>${project.basedir}/src/test/java/</testSourceLocation>
 
     <!--FC related properties-->
-    <version.cloud-metadata-provider>0.0.19-SNAPSHOT</version.cloud-metadata-provider>
-    <version.cloud-metadata-common>0.0.19-SNAPSHOT</version.cloud-metadata-common>
+    <artifactregistry-maven-wagon.version>2.2.0</artifactregistry-maven-wagon.version>
+    <version.cloud-metadata-provider>0.0.20-SNAPSHOT</version.cloud-metadata-provider>
+    <version.cloud-metadata-common>0.0.20-SNAPSHOT</version.cloud-metadata-common>
     <version.cloud-data-plugins-common>0.0.3-SNAPSHOT</version.cloud-data-plugins-common>
     <apache.avro.version>1.11.3</apache.avro.version>
     <version.commons-lang3>3.17.0</version.commons-lang3>
@@ -125,20 +126,10 @@
 
   <repositories>
     <repository>
-      <id>sonatype</id>
-      <url>https://oss.sonatype.org/content/groups/public</url>
+      <id>artifact-registry</id>
+      <url>artifactregistry://europe-west4-maven.pkg.dev/gcp-srv-nprd/gcp-srv-nprd-arm-shared</url>
       <releases>
         <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>sonatype-snapshots</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-      <releases>
-        <enabled>false</enabled>
       </releases>
       <snapshots>
         <enabled>true</enabled>
@@ -826,6 +817,13 @@
 
   <build>
     <testSourceDirectory>${testSourceLocation}</testSourceDirectory>
+    <extensions>
+      <extension>
+        <groupId>com.google.cloud.artifactregistry</groupId>
+        <artifactId>artifactregistry-maven-wagon</artifactId>
+        <version>${artifactregistry-maven-wagon.version}</version>
+      </extension>
+    </extensions>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -1050,17 +1048,6 @@
               <!-- releaseProfiles configuration will actually force a Maven profile
                 – the `releases` profile – to become active during the Release process. -->
               <releaseProfiles>releases</releaseProfiles>
-            </configuration>
-          </plugin>
-
-          <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>1.6.2</version>
-            <extensions>true</extensions>
-            <configuration>
-              <nexusUrl>https://oss.sonatype.org</nexusUrl>
-              <serverId>sonatype.release</serverId>
             </configuration>
           </plugin>
         </plugins>
