@@ -103,7 +103,7 @@
     <!--FC related properties-->
     <version.cloud-metadata-provider>0.0.3-SNAPSHOT</version.cloud-metadata-provider>
     <version.cloud-metadata-common>0.0.3-SNAPSHOT</version.cloud-metadata-common>
-    <version.cloud-data-plugins-common>0.0.2-SNAPSHOT</version.cloud-data-plugins-common>
+    <version.cloud-data-plugins-common>0.0.3-SNAPSHOT</version.cloud-data-plugins-common>
     <apache.avro.version>1.11.3</apache.avro.version>
     <version.commons-lang3>3.17.0</version.commons-lang3>
   </properties>
