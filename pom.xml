@@ -101,8 +101,9 @@
     <testSourceLocation>${project.basedir}/src/test/java/</testSourceLocation>
 
     <!--FC related properties-->
-    <version.cloud-metadata-provider>0.0.19-SNAPSHOT</version.cloud-metadata-provider>
-    <version.cloud-metadata-common>0.0.19-SNAPSHOT</version.cloud-metadata-common>
+    <artifactregistry-maven-wagon.version>2.2.0</artifactregistry-maven-wagon.version>
+    <version.cloud-metadata-provider>0.0.20-SNAPSHOT</version.cloud-metadata-provider>
+    <version.cloud-metadata-common>0.0.20-SNAPSHOT</version.cloud-metadata-common>
     <version.cloud-data-plugins-common>0.0.3-SNAPSHOT</version.cloud-data-plugins-common>
     <apache.avro.version>1.11.3</apache.avro.version>
     <version.commons-lang3>3.17.0</version.commons-lang3>
@@ -826,6 +827,13 @@
 
   <build>
     <testSourceDirectory>${testSourceLocation}</testSourceDirectory>
+    <extensions>
+      <extension>
+        <groupId>com.google.cloud.artifactregistry</groupId>
+        <artifactId>artifactregistry-maven-wagon</artifactId>
+        <version>${artifactregistry-maven-wagon.version}</version>
+      </extension>
+    </extensions>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
