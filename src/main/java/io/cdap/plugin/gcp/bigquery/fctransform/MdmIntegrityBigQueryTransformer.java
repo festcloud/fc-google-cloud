@@ -1,5 +1,7 @@
 package io.cdap.plugin.gcp.bigquery.fctransform;
 
+import ai.festcloud.cloud.data.services.common.tokenprovider.BearerTokenProvider;
+import ai.festcloud.cloud.data.services.common.tokenprovider.SupplierBearerTokenProvider;
 import ai.festcloud.datafabric.plugins.common.integrity.CDAPUtils;
 import ai.festcloud.datafabric.plugins.common.integrity.IntegrityService;
 import ai.festcloud.datafabric.plugins.common.integrity.IntegrityServiceBQ;
@@ -65,7 +67,12 @@ public class MdmIntegrityBigQueryTransformer extends Transform<StructuredRecord,
     FailureCollector failureCollector = context.getFailureCollector();
     outputSchema = config.getSchema(failureCollector);
     String schemaRegistryHost = context.getArguments().get(MetadataUtils.SCHEMA_REGISTRY_HOST);
-    entities = MetadataUtils.getTypeRecordsByManifest(schemaRegistryHost, config.getManifestVersion());
+    String platformServiceToken = context.getArguments().get(MetadataUtils.PLATFORM_SERVICE_TOKEN);
+    BearerTokenProvider bearerTokenProvider =
+        new SupplierBearerTokenProvider(() -> platformServiceToken);
+    entities =
+        MetadataUtils.getTypeRecordsByManifest(
+            schemaRegistryHost, config.getManifestVersion(), bearerTokenProvider);
     config.validate(failureCollector, entities, context.getInputSchema());
 
     MappingParsingService mappingParsingService
