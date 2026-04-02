@@ -17,13 +17,9 @@
 package io.cdap.plugin.gcp.bigquery.connector;
 
 import com.google.cloud.bigquery.BigQueryError;
-import com.google.cloud.bigquery.EmptyTableResult;
 import com.google.cloud.bigquery.Job;
 import com.google.cloud.bigquery.JobStatus;
-import com.google.cloud.bigquery.TableResult;
-import io.cdap.cdap.api.data.format.StructuredRecord;
 import io.cdap.cdap.etl.api.connector.SampleType;
-import io.cdap.plugin.gcp.bigquery.util.BigQueryDataParser;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -37,7 +33,6 @@ import static org.powermock.api.mockito.PowerMockito.doThrow;
 import static org.powermock.api.mockito.PowerMockito.mock;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 @RunWith(MockitoJUnitRunner.class)

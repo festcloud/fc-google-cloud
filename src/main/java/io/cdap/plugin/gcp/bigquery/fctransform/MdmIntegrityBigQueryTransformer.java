@@ -1,7 +1,5 @@
 package io.cdap.plugin.gcp.bigquery.fctransform;
 
-import ai.festcloud.cloud.data.services.common.tokenprovider.BearerTokenProvider;
-import ai.festcloud.cloud.data.services.common.tokenprovider.SupplierBearerTokenProvider;
 import ai.festcloud.datafabric.plugins.common.integrity.CDAPUtils;
 import ai.festcloud.datafabric.plugins.common.integrity.IntegrityService;
 import ai.festcloud.datafabric.plugins.common.integrity.IntegrityServiceBQ;
@@ -10,6 +8,8 @@ import ai.festcloud.datafabric.plugins.common.integrity.mapping.MappingEntryConf
 import ai.festcloud.datafabric.plugins.common.integrity.mapping.MappingObj;
 import ai.festcloud.datafabric.plugins.common.integrity.mapping.MappingParsingService;
 import ai.festcloud.metadata.model.TypeRecord;
+import ai.festcloud.platform.token.provider.BearerTokenProvider;
+import ai.festcloud.platform.token.provider.SupplierBearerTokenProvider;
 import com.google.auth.Credentials;
 import com.google.cloud.bigquery.BigQuery;
 import io.cdap.cdap.api.annotation.Description;
